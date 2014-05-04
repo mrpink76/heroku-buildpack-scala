@@ -51,6 +51,10 @@ SBT_BINDIR="$SBT_USER_HOME"/bin
 # chdir as sbt expects
 cd $BUILD_DIR
 
+# ADDED BY PETTER
+echo "-----> Dropping ivy cache from the slug" 
+rm -rf $SBT_USER_HOME/.ivy2 
+
 # unpack cache
 CACHED_DIRS="$SBT_USER_HOME/.ivy2 $SBT_BINDIR target project/target project/boot"
 for DIR in $CACHED_DIRS; do
@@ -152,13 +156,4 @@ fi
 
 # Move compiled app back to where Heroku expects it
 mv $BUILD_DIR $APP_BUILD_DIR
-
-# Added by Petter
-for DIR in $CACHED_DIRS ; do 
-rm -rf $CACHE_DIR/$DIR 
-mkdir -p $CACHE_DIR/$DIR 
-cp -r $DIR/.  $CACHE_DIR/$DIR 
-# The following 2 lines are what you would add
-echo "-----> Dropping ivy cache from the slug" 
-rm -rf $SBT_USER_HOME/.ivy2 
 
